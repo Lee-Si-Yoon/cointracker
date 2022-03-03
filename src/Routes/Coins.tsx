@@ -71,11 +71,10 @@ interface ICoin {
 }
 
 function Coins() {
-  // isLoading is boolean
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+  // isLoading, isError, isSucess, isIdle is possible
   const { isLoading, data } = useQuery<ICoin[]>("allcoins", fetchCoins);
-
   return (
     <Container>
       <HelmetProvider>

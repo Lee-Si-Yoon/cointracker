@@ -1,7 +1,7 @@
 //import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router";
 import { Link, useMatch, Outlet } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
 //import Price from "./Price";
 //import Chart from "./Chart";
@@ -148,7 +148,7 @@ function Coin() {
     ["info", coinId],
     () => fetchCoinInfo(coinId),
     {
-      refetchInterval: 5000,
+      refetchInterval: 10000,
       // refetch every 5secs
     }
   );
@@ -156,15 +156,18 @@ function Coin() {
     ["tickers", coinId],
     () => fetchCoinTickers(coinId)
   );
+  // to use both loading as variable
   const loading = infoLoading || tickersLoading;
 
   return (
     <Container>
-      <Helmet>
-        <title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-        </title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>
+            {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+          </title>
+        </Helmet>
+      </HelmetProvider>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -186,6 +189,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
+              {/* ERROR HERE */}
               <span>$ {tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
