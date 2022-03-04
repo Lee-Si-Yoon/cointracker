@@ -36,7 +36,9 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.05), 3px 3px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid white;
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -45,15 +47,16 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: ${(props) => props.theme.textColor};
   span:first-child {
     font-size: 10px;
-    font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 5px;
   }
 `;
 
 const Description = styled.p`
+  color: ${(props) => props.theme.textColor};
   margin: 20px 0px;
 `;
 
@@ -69,9 +72,11 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.05), 3px 3px 3px rgba(0, 0, 0, 0.05);
   padding: 7px 0px;
   border-radius: 10px;
+  border: 1px solid white;
   a {
     color: ${(props) =>
       props.isActive ? props.theme.accentColor : props.theme.textColor};
@@ -172,7 +177,6 @@ function Coin() {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
-        <Link to={"../"}> go back</Link>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -189,7 +193,6 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              {/* ERROR HERE */}
               <span>$ {tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
@@ -213,6 +216,7 @@ function Coin() {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
+
           {/* Outlet renders chart or price */}
           <Outlet context={{ coinId }} />
         </>
