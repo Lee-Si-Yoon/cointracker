@@ -4,6 +4,20 @@ import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "../atoms";
+import styled from "styled-components";
+
+const ChartContainer = styled.div`
+  padding: 30px 0 0 0;
+  background-color: ${(props) => props.theme.cardBgColor};
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.05), 3px 3px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  border: 1px solid white;
+  p {
+    text-align: right;
+    padding: 0 15px 0 0;
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
 
 type IParam = {
   coinId: string | undefined;
@@ -34,7 +48,8 @@ function Chart() {
       {isLoading ? (
         "Loading chart..."
       ) : (
-        <>
+        <ChartContainer>
+          <p>2weeks</p>
           <ApexChart
             type="candlestick"
             series={[
@@ -73,7 +88,7 @@ function Chart() {
               yaxis: { show: false },
             }}
           ></ApexChart>
-        </>
+        </ChartContainer>
       )}
     </div>
   );
